@@ -1,10 +1,18 @@
 <?php
 class ConnectDB {
-    private $host = "localhost";
-    private $username = "root";  // Sử dụng tài khoản root
-    private $password = "";      // Không có mật khẩu (hoặc điền mật khẩu nếu có)
-    private $dbname = "hgbeauty";
+    private $host;
+    private $username;
+    private $password;
+    private $dbname;
     private $conn;
+
+    public function __construct() {
+        // Lấy thông tin từ biến môi trường
+        $this->host = getenv('DB_HOST') ?: 'localhost';
+        $this->username = getenv('DB_USERNAME') ?: 'root';
+        $this->password = getenv('DB_PASSWORD') ?: '';
+        $this->dbname = getenv('DB_DATABASE') ?: 'hgbeauty';
+    }
 
     public function open() {
         $this->conn = new mysqli($this->host, $this->username, $this->password, $this->dbname);
